@@ -13,11 +13,11 @@ const crypto = require("crypto");
 const db = require("./firebase");
 const { collection, getDocs, updateDoc, doc, setDoc, deleteDoc, getDoc } = require("firebase/firestore");
 
-const port = 5001;
-
+const port = process.env.PORT || 5001;
+const API = process.env.API_URL || `http://127.0.0.1:${port}`;
 const client_id = process.env.CLIENT_ID; // Your clientId
 const client_secret = process.env.CLIENT_SECRET; // Your secret
-const redirect_uri = `http://localhost:${port}/spotify/callback`; // Your redirect uri
+const redirect_uri = `${API}/spotify/callback`; // Your redirect uri
 
 const stateKey = "spotify_auth_state";
 

@@ -25,6 +25,8 @@ Installation
         (you may need to first either fork the repo or request permissions to do so if not already allowed): 
         git clone https://github.com/Ethan-code-1/launch24-swe-week2-team5.git 
 
+        Open VS code with devcontiner extension and open project in container with docker desktop open
+
         Next change directories into the front end folder and within the vite-project folder run the following command: 
         -npm install 
 
@@ -44,7 +46,7 @@ Installation
         Login with a spotify account to https://developer.spotify.com/ and click on your name in the top right to go to your dashboard. 
 
         Create a new app, giving it an App name and description. For the field Redirect URLs paste in
-        http://localhost:5001/spotify/callback
+        http://127.0.0.1:5001/spotify/callback
         Then for the section that asks “Which API/SDKs are you planning to use?” select Web API then click save.
 
         You now need to add users to your app by clicking on the newly created app, go to settings in the top right, 

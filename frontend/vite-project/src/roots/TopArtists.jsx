@@ -3,6 +3,7 @@ import { AuthContext } from "../components/AuthContext";
 import axios from "axios";
 import "../styles/Topartists.css";
 import "../styles/Discover.css";
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const TopArtists = () => {
   const { userData } = useContext(AuthContext);
   const [topArtists, setTopArtists] = useState([]);
@@ -12,8 +13,7 @@ export const TopArtists = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5001/spotify/top-artists",
+        const response = await axios.get(`${API}/spotify/top-artists`,
           {
             params: { access_token: accessToken, time_range: timeFrame },
           }

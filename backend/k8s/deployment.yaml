@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        role: backend
+      containers:
+        - name: backend
+          image: jasonqtpham/spotify-backend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+          env:
+            - name: FIREBASE_CRED_PATH
+              value: /etc/firebase/permissions.json
+            # - name: API_URL  If you set up ingress use this for callback URL
+            #   value: http://backend-svc:5001
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CLIENT_SECRET
+          volumeMounts:
+            - name: firebase-creds
+              mountPath: /etc/firebase
+              readOnly: true
+      volumes:
+        - name: firebase-creds
+          secret:
+            secretName: backend-secrets
+            items:
+              - key: permissions.json
+                path: permissions.json

@@ -5,7 +5,7 @@ import "../styles/Profile.css";
 import "../styles/Topartists.css";
 import "../styles/Discover.css";
 import mockphoto from '../images/mockprofilephoto.png';
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const Profile = () => {
   const { userData } = useContext(AuthContext);
   const [topArtists, setTopArtists] = useState([]);
@@ -29,8 +29,7 @@ export const Profile = () => {
 
   const handleConfirm = async () => {
     try {
-      await axios.put(
-        `http://localhost:5001/public-profile/update-name/${userId}`,
+      await axios.put(`${API}/public-profile/update-name/${userId}`,
         { username: editUsername }
       );
       setUsername(editUsername);
@@ -47,8 +46,7 @@ export const Profile = () => {
 
   const setPublicPrivateProfile = async (isPublicProfile) => {
     try {
-      await axios.put(
-        `http://localhost:5001/public-profile/update-ispublic/${userId}`,
+      await axios.put(`${API}/public-profile/update-ispublic/${userId}`,
         { ispublic: isPublicProfile }
       );
     } catch (e) {
@@ -60,35 +58,32 @@ export const Profile = () => {
     try {
       let response;
 
-      response = await axios.get(
-        "http://localhost:5001/spotify/top-artists",
+      response = await axios.get(`${API}/spotify/top-artists`,
         {
           params: { access_token: accessToken, time_range: "medium_term" },
         }
       );
       setTopArtists(response.data.items.slice(0, items));
 
-      response = await axios.get("http://localhost:5001/spotify/top-tracks", {
+      response = await axios.get(`${API}/spotify/top-tracks`, {
         params: { access_token: accessToken, time_range: "medium_term" },
       });
       setTopSongs(response.data.items.slice(0, items));
 
-      response = await axios.get(
-        "http://localhost:5001/spotify/liked-tracks",
+      response = await axios.get(`${API}/spotify/liked-tracks`,
         {
           params: { access_token: accessToken },
         }
       );
       setLikedSongs(response.data.items.slice(0, items));
 
-      response = await axios.get("http://localhost:5001/spotify/user-info", {
+      response = await axios.get(`${API}/spotify/user-info`, {
         params: { access_token: accessToken },
       });
       setUser(response.data);
       console.log("userdata", response.data);
 
-      response = await axios.get(
-        `http://localhost:5001/public-profile/${userId}`
+      response = await axios.get(`${API}/public-profile/${userId}`
       );
       setUsername(response.data.username);
       setEditUsername(response.data.username);

@@ -3,7 +3,7 @@ import axios from 'axios';
 import SearchIcon from '@rsuite/icons/Search';
 import { AuthContext } from '../components/AuthContext';
 import '../styles/TopSongs.css';
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const TopSongs = () => {
   const { userData } = useContext(AuthContext);
   const [topTracks, setTopTracks] = useState([]);
@@ -16,7 +16,7 @@ export const TopSongs = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/spotify/top-tracks', {
+        const response = await axios.get(`${API}/spotify/top-tracks`, {
           params: { access_token: accessToken, time_range: timeRange }
         });
         setTopTracks(response.data.items);

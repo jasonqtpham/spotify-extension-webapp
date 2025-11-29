@@ -18,7 +18,7 @@ const Auth = () => {
             marginTop: "2em",
             border: '2px solid white',
         }}>
-            <a href='http://localhost:5001/spotify/login' style={{color: "white", textDecoration: "none"}}><strong>Login</strong></a>
+            <a href='http://127.0.0.1:5001/spotify/login' style={{color: "white", textDecoration: "none"}}><strong>Login</strong></a>
         </button>
 
     </>

@@ -5,3 +5,5 @@ env
 permissions.json
 
 node_modules
+
+secrets.yaml

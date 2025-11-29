@@ -6,7 +6,8 @@ const inboxRouter = require('./inbox');
 const userRouter = require('./users');
 const publicProfileRouter = require('./publicProfile');
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
+
 app.use(express.json());
 
 const db = require("./firebase");
@@ -40,6 +41,6 @@ app.use("/inbox", inboxRouter);
 app.use("/public-profile", publicProfileRouter);
 app.use("/users", userRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(port,"0.0.0.0", () => {
+    console.log(`Server is running on http://0.0.0.0:${port}`);
 });

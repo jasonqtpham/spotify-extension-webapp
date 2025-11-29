@@ -5,7 +5,7 @@ import "../styles/Profile.css";
 import "../styles/Topartists.css";
 import "../styles/Navbar.css";
 import { useParams } from "react-router-dom";
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const PublicProfile = () => {
   const [userInfo, setUserInfo] = useState(null);
   //   const [user, setUser] = useState(null);
@@ -14,7 +14,7 @@ export const PublicProfile = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:5001/public-profile/${id}`);
+      const res = await axios.get(`${API}/public-profile/${id}`);
       console.log(res.data);
       setUserInfo(res.data);
     } catch (e) {

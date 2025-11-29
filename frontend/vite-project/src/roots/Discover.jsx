@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import mockphoto from '../images/mockprofilephoto.png';
 import '../styles/Discover.css';
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const Discover = () => {
   const [profiles, setProfiles] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ export const Discover = () => {
 
   async function fetchPublicProfiles() {
     try {
-      const res = await axios.get("http://localhost:5001/users/public");
+      const res = await axios.get(`${API}/users/public`);
       setProfiles(res.data);
       setLoading(false); // Set loading to false after data is fetched
     } catch (error) {

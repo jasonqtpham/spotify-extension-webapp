@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import '../styles/Forum.css';
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const Forum = () => {
   const [posts, setPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
@@ -24,13 +24,13 @@ export const Forum = () => {
     setLoading(false);
   };
   async function fetchAllPosts() {
-    const res = (await axios.get("http://localhost:5001/forum")).data;
+    const res = (await axios.get(`${API}/forum`)).data;
     console.log(res);
     setPosts(res);
   }
 
   async function fetchMyPosts() {
-    const res = (await axios.get(`http://localhost:5001/forum/${id}`)).data;
+    const res = (await axios.get(`${API}/forum/${id}`)).data;
     for (const post of res) {
       }
     setMyPosts(res);
@@ -43,7 +43,7 @@ export const Forum = () => {
       content,
       date: Date.now()
     };
-    await axios.post(`http://localhost:5001/forum/${id}`, body);
+    await axios.post(`${API}/forum/${id}`, body);
     location.reload();
   }
 
@@ -54,7 +54,7 @@ export const Forum = () => {
 
   const handleVote = async (post, voteType, userId) => {
     try {
-        const response = await axios.post(`http://localhost:5001/forum/vote/${id}`, {
+        const response = await axios.post(`${API}/forum/vote/${id}`, {
             voteType,
             userId: userId,
             postId: post.id

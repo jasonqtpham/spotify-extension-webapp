@@ -5,7 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete'; // Import the Delete icon
 import TextField from "@mui/material/TextField";
 import { Autocomplete } from "@mui/material";
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const Inbox = ({ toId = 'x' }) => {
   const [mode, setMode] = useState('yourPosts'); 
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -19,7 +19,7 @@ export const Inbox = ({ toId = 'x' }) => {
 
   async function fetchAllPosts() {
     setLoading(true); // Set loading to true before fetching
-    const res = (await axios.get(`http://localhost:5001/inbox/${id}`)).data;
+    const res = (await axios.get(`${API}/inbox/${id}`)).data;
     console.log(res);
     setMessages(res);
     if (res.length > 0) {
@@ -29,7 +29,7 @@ export const Inbox = ({ toId = 'x' }) => {
   }
 
   async function fetchAllUsers() {
-    const res = (await axios.get(`http://localhost:5001/inbox/draft/${toId}`)).data;
+    const res = (await axios.get(`${API}/inbox/draft/${toId}`)).data;
     console.log(res);
     setUsers(res["usernames"]);
     setTo(res["username"]);
@@ -56,14 +56,14 @@ export const Inbox = ({ toId = 'x' }) => {
 
   const handleDelete = async () => {
     const msgId = selectedMessage["id"];
-    const res = (await axios.delete(`http://localhost:5001/inbox/${id}/${msgId}`)).data;
+    const res = (await axios.delete(`${API}/inbox/${id}/${msgId}`)).data;
     console.log(res);
     fetchAllPosts();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post(`http://localhost:5001/inbox/${id}`, newMsg);
+    const res = await axios.post(`${API}/inbox/${id}`, newMsg);
     console.log(res);
     handleToggle("yourPosts");
     alert("Message Sent!");

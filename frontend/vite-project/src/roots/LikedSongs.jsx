@@ -5,7 +5,7 @@ import SearchIcon from '@rsuite/icons/Search';
 import CloseOutlineIcon from '@rsuite/icons/CloseOutline';
 import { AuthContext } from '../components/AuthContext';
 import '../styles/LikedSongs.css';
-
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
 export const LikedSongs = () => {
   const { userData } = useContext(AuthContext);
   const [likedSongs, setLikedSongs] = useState([]);
@@ -20,7 +20,7 @@ export const LikedSongs = () => {
   useEffect(() => {
     const fetchLikedSongs = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/spotify/liked-tracks', {
+        const response = await axios.get(`${API}/spotify/liked-tracks`, {
           params: { access_token: accessToken }
         });
         setLikedSongs(response.data.items);
@@ -59,7 +59,7 @@ export const LikedSongs = () => {
     setSelectedSong(song.track);
     setIsPanelOpen(true);
     try {
-      const artistResponse = await axios.get('http://localhost:5001/spotify/artist', {
+      const artistResponse = await axios.get(`${API}/spotify/artist`, {
         params: {
           access_token: accessToken,
           artistId: song.track.artists[0].id,

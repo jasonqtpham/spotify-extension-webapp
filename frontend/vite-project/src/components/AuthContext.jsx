@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -9,7 +11,7 @@ const AuthProvider = ({ children }) => {
     // Function to refresh the token
     const refreshAccessToken = async (refresh_token) => {
         try {
-            const response = await axios.get('http://localhost:5001/spotify/refresh_token', {
+            const response = await axios.get(`${API}/spotify/refresh_token`, {
                 params: { refresh_token: refresh_token },
             });
             const { access_token } = response.data;
